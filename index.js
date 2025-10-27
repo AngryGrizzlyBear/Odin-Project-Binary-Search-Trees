@@ -76,6 +76,18 @@ class Tree {
             return this.find(value, node.right);
         }
     }
+    levelOrderForEach(callback) {
+        if (this.root === null) return;
+        const queue = [this.root];
+
+        while(queue.length > 0) {
+            const node = queue.shift();
+            callback(node);
+
+            if(node.left !==null) queue.push(node.left);
+            if(node.right !==null) queue.push(node.right);
+        }
+    }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -88,25 +100,28 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
         prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
     }
 };
-const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
-prettyPrint(tree.root);
+// const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+// prettyPrint(tree.root);
 
-tree.insert(10);
-tree.insert(2);
-tree.insert(5000);
-prettyPrint(tree.root);
+// tree.insert(10);
+// tree.insert(2);
+// tree.insert(5000);
+// prettyPrint(tree.root);
 
-console.log("Initial tree:");
-prettyPrint(tree.root);
+// console.log("Initial tree:");
+// prettyPrint(tree.root);
 
-console.log("\nDeleting 9 (has no children):");
-tree.deleteItem(9);
-prettyPrint(tree.root);
+// console.log("\nDeleting 9 (has no children):");
+// tree.deleteItem(9);
+// prettyPrint(tree.root);
 
-console.log("\nDeleting 8 (has two children):");
-tree.deleteItem(8);
-prettyPrint(tree.root);
+// console.log("\nDeleting 8 (has two children):");
+// tree.deleteItem(8);
+// prettyPrint(tree.root);
 
-console.log(tree.find(4));  // → Node with data 4
-console.log(tree.find(10)); // → null
+// console.log(tree.find(4));  // → Node with data 4
+// console.log(tree.find(10)); // → null
+
+const tree = new Tree([1,7,4,23,8,9,3,5,67]);
+tree.levelOrderForEach(node => console.log(node.data));
 
