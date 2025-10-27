@@ -102,6 +102,13 @@ class Tree {
         this.preOrderForEach(callback, node.left);
         this.preOrderForEach(callback, node.right);
     }
+    postOrderForEach(callback, node = this.root) {
+        if (node === null) return;
+
+        this.postOrderForEach(callback, node.left);
+        this.postOrderForEach(callback, node.right);
+        callback(node);
+    }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -137,7 +144,8 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 // console.log(tree.find(10)); // → null
 
 const tree = new Tree([1,7,4,23,8,9,3,5,67]);
-tree.preOrderForEach(node => console.log(node.data));
+tree.postOrderForEach(node => console.log(node.data));
+
 
 
 
