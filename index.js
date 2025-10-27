@@ -66,6 +66,16 @@ class Tree {
         }
         return node;
     }
+    find(value, node = this.root) {
+        if (node === null) return null;
+
+        if (value === node.data) return node;
+        if (value < node.data) {
+            return this.find(value, node.left);
+        } else {
+            return this.find(value, node.right);
+        }
+    }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -96,4 +106,7 @@ prettyPrint(tree.root);
 console.log("\nDeleting 8 (has two children):");
 tree.deleteItem(8);
 prettyPrint(tree.root);
+
+console.log(tree.find(4));  // → Node with data 4
+console.log(tree.find(10)); // → null
 
