@@ -40,6 +40,32 @@ class Tree {
         }
         return node;
     }
+    deleteItem(value, node = this.root) {
+        if (node === null) return null;
+
+        if (value < node.data) {
+            node.left = this.deleteItem(value, node.left);
+        } else if (value > node.data) {
+            node.right = this.deleteItem(value, node.right);
+        } else {
+            if (node.left === null && node.right === null) {
+                return null;
+            }
+            if (node.left === null) return node.right;
+            if (node.right === null) return node.left;
+
+            let successor = this.findMinNode(node.right);
+            node.data = successor.data;
+            node.right = this.deleteItem(successor.data, node.right);
+        }
+        return node;
+    }
+    findMinNode(node) {
+        while (node.left !== null) {
+            node = node.left;
+        }
+        return node;
+    }
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -59,3 +85,15 @@ tree.insert(10);
 tree.insert(2);
 tree.insert(5000);
 prettyPrint(tree.root);
+
+console.log("Initial tree:");
+prettyPrint(tree.root);
+
+console.log("\nDeleting 9 (has no children):");
+tree.deleteItem(9);
+prettyPrint(tree.root);
+
+console.log("\nDeleting 8 (has two children):");
+tree.deleteItem(8);
+prettyPrint(tree.root);
+
